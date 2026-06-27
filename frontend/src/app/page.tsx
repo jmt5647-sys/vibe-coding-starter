@@ -4,6 +4,8 @@ import { getHighlights, getProfile } from "@/lib/db";
 export default function Home() {
   const profile = getProfile();
   const highlights = getHighlights();
+  const introductionSections = profile.introduction.split("\n\n");
+  const introductionLabels = ["전공", "데이터 분석", "일상"];
 
   return (
     <main className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f]">
@@ -16,9 +18,9 @@ export default function Home() {
 
         <div className="grid min-h-[calc(100vh-44px)] content-center gap-10 py-14 text-center">
           <div>
-            <p className="text-2xl font-semibold tracking-[-0.015em] sm:text-3xl">{profile.name}</p>
-            <h1 className="mx-auto mt-3 max-w-5xl text-[58px] font-bold leading-[1.04] tracking-[-0.022em] sm:text-[82px] lg:text-[96px]">
-              데이터와 러닝을 좋아합니다.
+            <h1 className="mx-auto max-w-5xl text-[58px] font-bold leading-[1.04] tracking-[-0.022em] sm:text-[82px] lg:text-[96px]">
+              <span className="block">데이터를 읽고,</span>
+              <span className="block">꾸준히 달립니다.</span>
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-xl font-light leading-[1.4] tracking-[-0.01em] text-[#474747]">
               {profile.tagline}
@@ -53,17 +55,23 @@ export default function Home() {
         </div>
 
         {/* 소개 문장 영역: 학생들이 문구와 스타일을 바꾸는 연습용 섹션 */}
-        <div className="grid gap-5 py-10 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid gap-5 py-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="rounded-[28px] bg-white p-7 sm:p-10">
             <h2 className="text-5xl font-bold leading-[1.07] tracking-[-0.019em] text-[#1d1d1f]">자기소개</h2>
-            <p className="mt-6 max-w-3xl text-xl font-light leading-[1.4] tracking-[-0.01em] text-[#474747]">
-              {profile.introduction}
-            </p>
+            <div className="mt-7 grid gap-5">
+              {introductionSections.map((section, index) => (
+                <div key={introductionLabels[index] ?? section} className="rounded-[24px] bg-[#f5f5f7] p-5">
+                  <p className="text-lg font-bold tracking-[-0.01em] text-[#1d1d1f]">{introductionLabels[index] ?? "소개"}</p>
+                  <p className="mt-3 whitespace-pre-line text-2xl font-light leading-[1.45] tracking-[-0.01em] text-[#474747]">{section}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="rounded-[28px] bg-white p-4">
+          <div className="self-start rounded-[28px] bg-white p-4">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[24px] bg-[#f5f5f7]">
               <Image src="/images/tan-shiba.png" alt="탄 사진" fill sizes="(min-width: 1024px) 420px, calc(100vw - 72px)" className="object-cover" />
             </div>
+            <p className="px-2 pt-4 text-center text-lg font-semibold tracking-[-0.01em] text-[#474747]">탄 · 검정 시바견</p>
           </div>
         </div>
 
